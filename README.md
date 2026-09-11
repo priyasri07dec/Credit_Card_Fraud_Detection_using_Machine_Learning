@@ -120,8 +120,38 @@ Feature Importance->
 Model Serialization->
 Streamlit Deployment
 
+## Streamlit Application
 
+A Streamlit application was developed to make the fraud detection model interactive.
 
+The application provides three main sections:
+
+1.Single Transaction Prediction
+2.Batch CSV Prediction
+3.Model Insights
+
+## Technologies Used
+### Programming Language
+* Python
+### Data Analysis
+* Pandas
+* NumPy
+### Data Visualization
+* Matplotlib
+* Seaborn
+### Machine Learning
+* Scikit-learn
+* XGBoost
+* Imbalanced-learn
+### Model Persistence
+* Joblib
+### Application Development
+* Streamlit
+### Development Tools
+* VS Code
+* Jupyter Notebook
+
+## Requirements
 
 
 
