@@ -100,42 +100,24 @@ The model uses statistical patterns within these anonymized features to distingu
 
 ## Project Overflow
 
-Dataset
-   ↓
-Data Understanding
-   ↓
-Data Cleaning
-   ↓
-Duplicate Removal
-   ↓
-Exploratory Data Analysis
-   ↓
-Class Imbalance Analysis
-   ↓
-Feature Analysis
-   ↓
-Outlier Analysis
-   ↓
-Train-Test Split
-   ↓
-Feature Scaling
-   ↓
-Baseline Model Comparison
-   ↓
-Class Imbalance Handling
-   ↓
-Weighted XGBoost
-   ↓
-Hyperparameter Tuning
-   ↓
-Threshold Optimization
-   ↓
-Final Model Evaluation
-   ↓
-Feature Importance
-   ↓
-Model Serialization
-   ↓
+Dataset->
+Data Understanding->
+Data Cleaning->
+Duplicate Removal->
+Exploratory Data Analysis->
+Class Imbalance Analysis->
+Feature Analysis->
+Outlier Analysis->
+Train-Test Split->
+Feature Scaling->
+Baseline Model Comparison->
+Class Imbalance Handling->
+Weighted XGBoost->
+Hyperparameter Tuning->
+Threshold Optimization->
+Final Model Evaluation->
+Feature Importance->
+Model Serialization->
 Streamlit Deployment
 
 
