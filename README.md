@@ -45,7 +45,9 @@ The main objectives of this project are:
 * Build and optimize an XGBoost classification model.
 * Optimize the classification threshold using validation data.
 * Evaluate the final model using fraud-focused performance metrics.
-Identify important features contributing to model predictions.
+* Identify important features contributing to model predictions.
+* Save the trained model and supporting artifacts.
+* Develop a Streamlit application for real-time and batch fraud prediction.
 
 ## Dataset
 
@@ -193,13 +195,13 @@ Exploratory Data Analysis was performed to understand the structure of the data 
 
 The EDA included:
 
-Target class distribution
-Transaction amount analysis
-Time distribution analysis
-Class-wise transaction analysis
-Feature distribution analysis
-Correlation analysis
-Outlier analysis
+* Target class distribution
+* Transaction amount analysis
+* Time distribution analysis
+* Class-wise transaction analysis
+* Feature distribution analysis
+* Correlation analysis
+* Outlier analysis
 
 ## Class Distribution Analysis
 
@@ -212,8 +214,170 @@ After duplicate removal, the class distribution was:
 | 0 - Legitimate | 283,253 |     99.83% |
 |      1 - Fraud |     473 |      0.17% |
 
+This means that fraudulent transactions represent only a very small proportion of all transactions.
 
+The severe imbalance makes fraud detection challenging.
 
+A model that predicts almost every transaction as legitimate can still achieve very high accuracy while failing to identify a significant number of fraudulent transactions.
 
-Save the trained model and supporting artifacts.
-Develop a Streamlit application for real-time and batch fraud prediction.
+Therefore, accuracy alone was not used as the primary model-selection criterion.
+
+## 5. Transaction Amount Analysis
+
+The Amount variable was analyzed using descriptive statistics and visualizations.
+
+Important statistics for the complete dataset were:
+
+| Statistic          |    Amount |
+| ------------------ | --------: |
+| Mean               |     88.47 |
+| Median             |     22.00 |
+| Standard Deviation |    250.40 |
+| Maximum            | 25,691.16 |
+
+The large difference between the mean and median indicates that the Amount variable is strongly right-skewed.
+
+Fraudulent transactions had:
+
+| Statistic | Fraudulent Transactions |
+| --------- | ----------------------: |
+| Mean      |                  123.87 |
+| Median    |                    9.82 |
+
+Although the mean transaction amount for fraudulent transactions was higher, the median was lower.
+
+Therefore, it would not be appropriate to conclude that fraudulent transactions are generally more expensive.
+
+Log-scaled visualizations were used to improve the visibility of the distribution because of the strong skewness.
+
+No log transformation was applied to the final model input solely based on this observation.
+
+## 6. Time Analysis
+
+The Time variable represents the elapsed time between transactions.
+
+The distribution of Time was non-uniform.
+
+The dataset showed different levels of transaction activity across different time periods, including a noticeable reduction in activity around approximately 90,000–115,000 seconds.
+
+Class-wise analysis also showed some differences in the temporal distribution of legitimate and fraudulent transactions.
+
+However, Time alone was not considered sufficient for fraud detection.
+
+## 7. Feature Distribution Analysis
+
+The distributions of the anonymized PCA features V1–V28 were analyzed.
+
+Class-wise histograms and boxplots were used to compare legitimate and fraudulent transactions.
+
+Several features showed noticeable distribution shifts between the two classes.
+
+Features such as:
+
+V14
+V17
+V12
+V10
+V16
+V7
+
+showed particularly noticeable differences between legitimate and fraudulent transactions.
+
+However, substantial overlap between the two classes was also observed.
+
+This indicates that fraud detection requires combining information from multiple features rather than relying on a single variable.
+
+## 8. Correlation Analysis
+
+Correlation analysis was performed to understand the linear relationship between the predictor variables and the target variable.
+
+The features with the strongest absolute correlations with Class were:
+
+| Rank | Feature | Correlation with Class |
+| ---: | ------- | ---------------------: |
+|    1 | V17     |                -0.3135 |
+|    2 | V14     |                -0.2934 |
+|    3 | V12     |                -0.2507 |
+|    4 | V10     |                -0.2066 |
+|    5 | V16     |                -0.1872 |
+|    6 | V7      |                -0.1724 |
+|    7 | V11     |                 0.1491 |
+|    8 | V4      |                 0.1293 |
+|    9 | V18     |                -0.1053 |
+|   10 | V1      |                -0.0945 |
+
+Time and Amount had relatively weak linear correlations with the target:
+
+Correlation analysis was used as an exploratory technique.
+
+It was not used as the sole basis for feature selection because non-linear machine learning models can identify useful patterns even when linear correlation is weak.
+
+## 9. Outlier Analysis
+
+The Interquartile Range (IQR) method was used to identify statistical outliers.
+
+Several variables contained observations outside the IQR boundaries.
+
+Examples included:
+
+* V27
+* Amount
+* V28
+* V20
+* V8
+* V6
+* V23
+* V12
+* V21
+* V14
+* V2
+* V5
+
+The presence of statistical outliers does not necessarily indicate erroneous data.
+
+In fraud detection, unusual observations may contain valuable information because fraudulent transactions can differ substantially from normal transaction patterns.
+
+Therefore, the identified outliers were retained.
+
+The main data-cleaning step was removal of exact duplicate records.
+
+## 10. EDA Summary
+
+The EDA showed the following major findings:
+
+* The dataset is extremely imbalanced.
+* Fraudulent transactions represent approximately 0.17% of the cleaned dataset.
+* No missing values were present.
+* 1,081 exact duplicate records were removed.
+* Amount is strongly right-skewed.
+* Time has a non-uniform distribution.
+* Several anonymized PCA features show different distributions between legitimate and fraudulent transactions.
+* V17, V14, V12, V10, V16 and V7 have relatively strong absolute correlations with the target.
+* Several variables contain statistical outliers.
+* Outliers were retained because unusual observations may be meaningful in fraud detection.
+
+These findings indicated that:
+
+* Class imbalance needs to be addressed.
+* Accuracy alone is not sufficient for model evaluation.
+* Appropriate evaluation metrics are required.
+* Feature scaling is required for some algorithms.
+* Non-linear models may be useful for identifying complex fraud patterns.
+
+## 11. Train-Test Split
+
+The target variable was separated from the input features:
+X = df.drop(columns="Class")
+y = df["Class"]
+
+The data was split into training and testing datasets using stratified sampling:
+X_train, X_test, y_train, y_test = train_test_split(
+    X,
+    y,
+    test_size=0.20,
+    random_state=42,
+    stratify=y
+)
+
+The training and testing sets retained approximately the same class distribution as the original dataset.
+
