@@ -381,3 +381,14 @@ X_train, X_test, y_train, y_test = train_test_split(
 
 The training and testing sets retained approximately the same class distribution as the original dataset.
 
+| Class |   Count |
+| ----: | ------: |
+|     0 | 226,602 |
+|     1 |     378 |
+
+| Class |  Count |
+| ----: | -----: |
+|     0 | 56,651 |
+|     1 |     95 |
+
+Stratified splitting was used to ensure that the minority fraud class was represented in both datasets.
