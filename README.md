@@ -152,10 +152,116 @@ The application provides three main sections:
 * Jupyter Notebook
 
 ## Requirements
+* streamlit
+* pandas
+* numpy
+* xgboost
+* scikit-learn
+* imbalanced-learn
+* joblib
+* matplotlib
+* seaborn
 
+## Key Findings
 
+The major findings from the project are:
 
+1. The dataset contains a very small proportion of fraudulent transactions.
+2. The cleaned dataset contains 283,726 transactions.
+3. Fraudulent transactions represent approximately 0.17% of the dataset.
+4. No missing values were found.
+5. 1,081 duplicate records were removed.
+6. The Amount variable is strongly right-skewed.
+7. The Time variable has a non-uniform distribution.
+8. Several anonymized PCA features show different distributions between legitimate and fraudulent transactions.
+9. V17, V14, V12, V10, V16 and V7 showed relatively strong absolute correlations with the target.
+10. Outliers were retained because unusual transactions may contain useful fraud-related information.
+11. Random Forest produced a strong baseline performance.
+12. SMOTE improved minority-class recall but reduced precision.
+13. Class-weighted XGBoost provided a strong balance between precision and recall.
+14. Hyperparameter tuning improved ROC-AUC and PR-AUC.
+15. Validation-based threshold optimization selected 0.35 as the final classification threshold.
+16. The final model achieved 80% recall on the untouched test dataset.
+17. V14 was the most important feature according to the final XGBoost model.
+18. The trained model was successfully serialized and integrated into a Streamlit application
 
+## Business Interpretation
+
+In a real-world credit card fraud detection system, the objective is not simply to maximize accuracy.
+
+The system needs to identify as many fraudulent transactions as possible while minimizing unnecessary alerts for legitimate customers.
+
+Two types of errors are particularly important:
+
+### False Negative
+
+A fraudulent transaction is classified as legitimate.
+
+Potential impact:
+
+* Financial loss
+* Customer dissatisfaction
+* Increased fraud exposure
+### False Positive
+
+A legitimate transaction is classified as fraudulent.
+
+Potential impact:
+
+* Customer inconvenience
+* Transaction declines
+* Increased manual investigation
+* Additional operational cost
+
+Therefore, fraud detection requires balancing precision and recall according to business requirements.
+
+## Conclusion
+
+This project demonstrates an end-to-end machine learning approach to credit card fraud detection.
+
+The analysis showed that the dataset is extremely imbalanced, with fraudulent transactions representing only approximately 0.17% of the cleaned dataset.
+
+Multiple machine learning algorithms were compared, followed by class imbalance handling, XGBoost class weighting, hyperparameter tuning and classification threshold optimization.
+
+The final XGBoost model achieved:
+
+### 99.95% Accuracy
+### 88.37% Precision
+### 80.00% Recall
+### 83.98% F1-score
+### 97.86% ROC-AUC
+### 83.47% PR-AUC
+
+on the untouched test dataset.
+
+The model successfully detected 76 out of 95 fraudulent transactions in the test set while generating 10 false-positive predictions.
+
+The final model was saved and integrated into a Streamlit application supporting:
+
+* Single transaction prediction
+* Batch CSV prediction
+* Fraud probability estimation
+* Classification using an optimized threshold
+* Model performance insights
+* Feature importance visualization
+
+Overall, this project demonstrates practical skills in:
+
+* Python
+* Pandas
+* NumPy
+* Exploratory Data Analysis
+* Data Cleaning
+* Data Preprocessing
+* Imbalanced Classification
+* Scikit-learn
+* XGBoost
+* Hyperparameter Tuning
+* Model Evaluation
+* Feature Importance
+* Model Serialization
+* Streamlit
+* Machine Learning Deployment
 
 
 
