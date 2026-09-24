@@ -1,5 +1,11 @@
 # Credit_Card_Fraud_Detection_using_Machine_Learning
 
+![web_page](web_page1.png)
+
+![web_page](web_page2.png)
+
+![web_page](web_page3.png)
+
 ## Project Overview
 
 Credit card fraud detection is a highly imbalanced binary classification problem where the number of legitimate transactions is significantly higher than fraudulent transactions.
